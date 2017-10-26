@@ -8,7 +8,7 @@ suite('MessageTemplatesMongoDbPersistence', ()=> {
     let fixture: MessageTemplatesPersistenceFixture;
 
     setup((done) => {
-        let config = YamlConfigReader.readConfig(null, './config/test_connections.yaml', null);
+        let config = YamlConfigReader.readConfig(null, './config/test_connections.yml', null);
         let dbConfig = config.getSection('mongodb');
 
         persistence = new MessageTemplatesMongoDbPersistence();
