@@ -9,6 +9,7 @@ import { PagingParams } from 'pip-services-commons-node';
 import { DataPage } from 'pip-services-commons-node';
 import { ICommandable } from 'pip-services-commons-node';
 import { CommandSet } from 'pip-services-commons-node';
+import { IdGenerator } from 'pip-services-commons-node';
 
 import { MessageTemplateV1 } from '../data/version1/MessageTemplateV1';
 import { MessageTemplateStatusV1 } from '../data/version1/MessageTemplateStatusV1';
@@ -58,6 +59,7 @@ export class MessageTemplatesController implements  IConfigurable, IReferenceabl
     public createTemplate(correlationId: string, template: MessageTemplateV1, 
         callback: (err: any, template: MessageTemplateV1) => void): void {
 
+        template.id = template.id || IdGenerator.nextLong();
         template.status = template.status || MessageTemplateStatusV1.New;
 
         this._persistence.create(correlationId, template, callback);

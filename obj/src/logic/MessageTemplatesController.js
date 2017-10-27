@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const pip_services_commons_node_1 = require("pip-services-commons-node");
 const pip_services_commons_node_2 = require("pip-services-commons-node");
+const pip_services_commons_node_3 = require("pip-services-commons-node");
 const MessageTemplateStatusV1_1 = require("../data/version1/MessageTemplateStatusV1");
 const MessageTemplatesCommandSet_1 = require("./MessageTemplatesCommandSet");
 class MessageTemplatesController {
@@ -30,6 +31,7 @@ class MessageTemplatesController {
         this._persistence.getOneByIdOrName(correlationId, idOrName, callback);
     }
     createTemplate(correlationId, template, callback) {
+        template.id = template.id || pip_services_commons_node_3.IdGenerator.nextLong();
         template.status = template.status || MessageTemplateStatusV1_1.MessageTemplateStatusV1.New;
         this._persistence.create(correlationId, template, callback);
     }
