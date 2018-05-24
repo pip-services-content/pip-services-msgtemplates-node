@@ -76,7 +76,7 @@ suite('MessageTemplatesHttpServiceV1', ()=> {
         async.series([
         // Create one template
             (callback) => {
-                rest.post('/message_templates/create_template',
+                rest.post('/v1/message_templates/create_template',
                     {
                         template: TEMPLATE1
                     },
@@ -95,7 +95,7 @@ suite('MessageTemplatesHttpServiceV1', ()=> {
             },
         // Create another template
             (callback) => {
-                rest.post('/message_templates/create_template', 
+                rest.post('/v1/message_templates/create_template', 
                     {
                         template: TEMPLATE2
                     },
@@ -114,7 +114,7 @@ suite('MessageTemplatesHttpServiceV1', ()=> {
             },
         // Get all templates
             (callback) => {
-                rest.post('/message_templates/get_templates',
+                rest.post('/v1/message_templates/get_templates',
                     {},
                     (err, req, res, page) => {
                         assert.isNull(err);
@@ -130,7 +130,7 @@ suite('MessageTemplatesHttpServiceV1', ()=> {
             (callback) => {
                 template1.text = { en: 'Updated Content 1' };
 
-                rest.post('/message_templates/update_template',
+                rest.post('/v1/message_templates/update_template',
                     { 
                         template: template1
                     },
@@ -149,7 +149,7 @@ suite('MessageTemplatesHttpServiceV1', ()=> {
             },
         // Delete template
             (callback) => {
-                rest.post('/message_templates/delete_template_by_id',
+                rest.post('/v1/message_templates/delete_template_by_id',
                     {
                         template_id: template1.id
                     },
@@ -164,7 +164,7 @@ suite('MessageTemplatesHttpServiceV1', ()=> {
             },
         // Try to get delete template
             (callback) => {
-                rest.post('/message_templates/get_template_by_id',
+                rest.post('/v1/message_templates/get_template_by_id',
                     {
                         template_id: template1.id
                     },
