@@ -5,7 +5,7 @@ let assert = require('chai').assert;
 import { Descriptor } from 'pip-services-commons-node';
 import { ConfigParams } from 'pip-services-commons-node';
 import { References } from 'pip-services-commons-node';
-import { ConsoleLogger } from 'pip-services-commons-node';
+import { ConsoleLogger } from 'pip-services-components-node';
 
 import { MessageTemplateV1 } from '../../src/data/version1/MessageTemplateV1';
 import { MessageTemplateStatusV1 } from '../../src/data/version1/MessageTemplateStatusV1';
@@ -37,7 +37,7 @@ suite('MessageTemplatesLambdaFunction', ()=> {
 
     suiteSetup((done) => {
         let config = ConfigParams.fromTuples(
-            'logger.descriptor', 'pip-services-commons:logger:console:default:1.0',
+            'logger.descriptor', 'pip-services:logger:console:default:1.0',
             'persistence.descriptor', 'pip-services-msgtemplates:persistence:memory:default:1.0',
             'controller.descriptor', 'pip-services-msgtemplates:controller:default:default:1.0'
         );

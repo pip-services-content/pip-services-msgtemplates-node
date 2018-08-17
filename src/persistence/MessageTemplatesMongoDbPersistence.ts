@@ -4,7 +4,7 @@ import { FilterParams } from 'pip-services-commons-node';
 import { PagingParams } from 'pip-services-commons-node';
 import { DataPage } from 'pip-services-commons-node';
 import { NotFoundException } from 'pip-services-commons-node';
-import { IdentifiableMongoDbPersistence } from 'pip-services-data-node';
+import { IdentifiableMongoDbPersistence } from 'pip-services-mongodb-node';
 
 import { MessageTemplateV1 } from '../data/version1/MessageTemplateV1';
 import { IMessageTemplatesPersistence } from './IMessageTemplatesPersistence';
