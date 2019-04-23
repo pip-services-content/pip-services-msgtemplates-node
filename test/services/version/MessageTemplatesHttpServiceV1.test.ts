@@ -3,9 +3,9 @@ let async = require('async');
 let restify = require('restify');
 let assert = require('chai').assert;
 
-import { ConfigParams } from 'pip-services-commons-node';
-import { Descriptor } from 'pip-services-commons-node';
-import { References } from 'pip-services-commons-node';
+import { ConfigParams, MultiString } from 'pip-services3-commons-node';
+import { Descriptor } from 'pip-services3-commons-node';
+import { References } from 'pip-services3-commons-node';
 
 import { MessageTemplateV1 } from '../../../src/data/version1/MessageTemplateV1';
 import { MessageTemplateStatusV1 } from '../../../src/data/version1/MessageTemplateStatusV1';
@@ -23,18 +23,18 @@ let TEMPLATE1: MessageTemplateV1 = {
     id: '1',
     name: 'template1',
     from: null,
-    subject: { en: 'Text 1' },
-    text: { en: 'Text 1' },
-    html: { en: 'Text 1' },
+    subject: new MultiString({ en: 'Text 1' }),
+    text: new MultiString({ en: 'Text 1' }),
+    html: new MultiString({ en: 'Text 1' }),
     status: MessageTemplateStatusV1.Completed
 };
 let TEMPLATE2: MessageTemplateV1 = {
     id: '2',
     name: 'template2',
     from: null,
-    subject: { en: 'Text 2' },
-    text: { en: 'Text 2' },
-    html: { en: 'Text 2' },
+    subject: new MultiString({ en: 'Text 2' }),
+    text: new MultiString({ en: 'Text 2' }),
+    html: new MultiString({ en: 'Text 2' }),
     status: MessageTemplateStatusV1.Completed
 };
 
@@ -85,7 +85,7 @@ suite('MessageTemplatesHttpServiceV1', ()=> {
 
                         assert.isObject(template);
                         assert.equal(template.name, TEMPLATE1.name);
-                        assert.equal(template.text.en, TEMPLATE1.text.en);
+                        assert.equal(template.text.en, TEMPLATE1.text.get('en'));
 
                         template1 = template;
 
@@ -104,7 +104,7 @@ suite('MessageTemplatesHttpServiceV1', ()=> {
 
                         assert.isObject(template);
                         assert.equal(template.name, TEMPLATE2.name);
-                        assert.equal(template.text.en, TEMPLATE2.text.en);
+                        assert.equal(template.text.en, TEMPLATE2.text.get('en'));
 
                         template2 = template;
 

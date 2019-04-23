@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const pip_services_commons_node_1 = require("pip-services-commons-node");
-const pip_services_commons_node_2 = require("pip-services-commons-node");
-const pip_services_commons_node_3 = require("pip-services-commons-node");
+const pip_services3_commons_node_1 = require("pip-services3-commons-node");
+const pip_services3_commons_node_2 = require("pip-services3-commons-node");
+const pip_services3_commons_node_3 = require("pip-services3-commons-node");
 const MessageTemplateStatusV1_1 = require("../data/version1/MessageTemplateStatusV1");
 const MessageTemplatesCommandSet_1 = require("./MessageTemplatesCommandSet");
 class MessageTemplatesController {
     constructor() {
-        this._dependencyResolver = new pip_services_commons_node_2.DependencyResolver(MessageTemplatesController._defaultConfig);
+        this._dependencyResolver = new pip_services3_commons_node_2.DependencyResolver(MessageTemplatesController._defaultConfig);
     }
     configure(config) {
         this._dependencyResolver.configure(config);
@@ -31,7 +31,7 @@ class MessageTemplatesController {
         this._persistence.getOneByIdOrName(correlationId, idOrName, callback);
     }
     createTemplate(correlationId, template, callback) {
-        template.id = template.id || pip_services_commons_node_3.IdGenerator.nextLong();
+        template.id = template.id || pip_services3_commons_node_3.IdGenerator.nextLong();
         template.status = template.status || MessageTemplateStatusV1_1.MessageTemplateStatusV1.New;
         this._persistence.create(correlationId, template, callback);
     }
@@ -43,6 +43,6 @@ class MessageTemplatesController {
         this._persistence.deleteById(correlationId, id, callback);
     }
 }
-MessageTemplatesController._defaultConfig = pip_services_commons_node_1.ConfigParams.fromTuples('dependencies.persistence', 'pip-services-msgtemplates:persistence:*:*:1.0');
+MessageTemplatesController._defaultConfig = pip_services3_commons_node_1.ConfigParams.fromTuples('dependencies.persistence', 'pip-services-msgtemplates:persistence:*:*:1.0');
 exports.MessageTemplatesController = MessageTemplatesController;
 //# sourceMappingURL=MessageTemplatesController.js.map

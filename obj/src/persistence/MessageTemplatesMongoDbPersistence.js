@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 let _ = require('lodash');
-const pip_services_commons_node_1 = require("pip-services-commons-node");
-const pip_services_commons_node_2 = require("pip-services-commons-node");
-const pip_services_mongodb_node_1 = require("pip-services-mongodb-node");
+const pip_services3_commons_node_1 = require("pip-services3-commons-node");
+const pip_services3_commons_node_2 = require("pip-services3-commons-node");
+const pip_services3_mongodb_node_1 = require("pip-services3-mongodb-node");
 const MessageTemplatesMongoDbSchema_1 = require("./MessageTemplatesMongoDbSchema");
-class MessageTemplatesMongoDbPersistence extends pip_services_mongodb_node_1.IdentifiableMongoDbPersistence {
+class MessageTemplatesMongoDbPersistence extends pip_services3_mongodb_node_1.IdentifiableMongoDbPersistence {
     constructor() {
         super('msgtemplates', MessageTemplatesMongoDbSchema_1.MessageTemplatesMongoDbSchema());
     }
     composeFilter(filter) {
-        filter = filter || new pip_services_commons_node_1.FilterParams();
+        filter = filter || new pip_services3_commons_node_1.FilterParams();
         let criteria = [];
         let search = filter.getAsNullableString('search');
         if (search != null) {
@@ -60,7 +60,7 @@ class MessageTemplatesMongoDbPersistence extends pip_services_mongodb_node_1.Ide
             if (!err)
                 this._logger.trace(correlationId, "Retrieved from %s by %s", this._collection, idOrName);
             if (item == null) {
-                err = new pip_services_commons_node_2.NotFoundException(correlationId, 'TEMPLATE_NOT_FOUND', 'Message template ' + idOrName + ' was not found').withDetails('id_or_name', idOrName);
+                err = new pip_services3_commons_node_2.NotFoundException(correlationId, 'TEMPLATE_NOT_FOUND', 'Message template ' + idOrName + ' was not found').withDetails('id_or_name', idOrName);
             }
             item = this.convertToPublic(item);
             callback(err, item);

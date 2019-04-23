@@ -1,5 +1,5 @@
-import { ConfigParams } from 'pip-services-commons-node';
-import { JsonFilePersister } from 'pip-services-data-node';
+import { ConfigParams } from 'pip-services3-commons-node';
+import { JsonFilePersister } from 'pip-services3-data-node';
 import { MessageTemplatesMemoryPersistence } from './MessageTemplatesMemoryPersistence';
 import { MessageTemplateV1 } from '../data/version1/MessageTemplateV1';
 export declare class MessageTemplatesFilePersistence extends MessageTemplatesMemoryPersistence {

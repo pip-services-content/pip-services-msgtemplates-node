@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 let _ = require('lodash');
-const pip_services_commons_node_1 = require("pip-services-commons-node");
-const pip_services_data_node_1 = require("pip-services-data-node");
-const pip_services_commons_node_2 = require("pip-services-commons-node");
-class MessageTemplatesMemoryPersistence extends pip_services_data_node_1.IdentifiableMemoryPersistence {
+const pip_services3_commons_node_1 = require("pip-services3-commons-node");
+const pip_services3_data_node_1 = require("pip-services3-data-node");
+const pip_services3_commons_node_2 = require("pip-services3-commons-node");
+class MessageTemplatesMemoryPersistence extends pip_services3_data_node_1.IdentifiableMemoryPersistence {
     constructor() {
         super();
     }
@@ -50,7 +50,7 @@ class MessageTemplatesMemoryPersistence extends pip_services_data_node_1.Identif
         return false;
     }
     composeFilter(filter) {
-        filter = filter || new pip_services_commons_node_1.FilterParams();
+        filter = filter || new pip_services3_commons_node_1.FilterParams();
         let search = filter.getAsNullableString('search');
         let id = filter.getAsNullableString('id');
         let status = filter.getAsNullableString('status');
@@ -78,7 +78,7 @@ class MessageTemplatesMemoryPersistence extends pip_services_data_node_1.Identif
         }
         else {
             this._logger.trace(correlationId, "Found item by %s", idOrName);
-            let err = new pip_services_commons_node_2.NotFoundException(correlationId, 'TEMPLATE_NOT_FOUND', 'Message template ' + idOrName + ' was not found').withDetails('id_or_name', idOrName);
+            let err = new pip_services3_commons_node_2.NotFoundException(correlationId, 'TEMPLATE_NOT_FOUND', 'Message template ' + idOrName + ' was not found').withDetails('id_or_name', idOrName);
             callback(err, null);
         }
     }
