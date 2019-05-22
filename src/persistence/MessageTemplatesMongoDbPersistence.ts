@@ -4,18 +4,18 @@ import { FilterParams } from 'pip-services3-commons-node';
 import { PagingParams } from 'pip-services3-commons-node';
 import { DataPage } from 'pip-services3-commons-node';
 import { NotFoundException } from 'pip-services3-commons-node';
-import { IdentifiableMongoDbPersistence } from 'pip-services3-mongodb-node';
+import { IdentifiableMongoosePersistence } from 'pip-services3-mongoose-node';
 
 import { MessageTemplateV1 } from '../data/version1/MessageTemplateV1';
 import { IMessageTemplatesPersistence } from './IMessageTemplatesPersistence';
-import { MessageTemplatesMongoDbSchema } from './MessageTemplatesMongoDbSchema';
+import { MessageTemplatesMongooseSchema } from './MessageTemplatesMongooseSchema';
 
 export class MessageTemplatesMongoDbPersistence 
-    extends IdentifiableMongoDbPersistence<MessageTemplateV1, string> 
+    extends IdentifiableMongoosePersistence<MessageTemplateV1, string> 
     implements IMessageTemplatesPersistence {
 
     constructor() {
-        super('msgtemplates', MessageTemplatesMongoDbSchema());
+        super('msgtemplates', MessageTemplatesMongooseSchema());
     }
     
     private composeFilter(filter: any) {

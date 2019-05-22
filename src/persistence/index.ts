@@ -1,5 +1,5 @@
 export { IMessageTemplatesPersistence } from './IMessageTemplatesPersistence';
 export { MessageTemplatesMemoryPersistence } from './MessageTemplatesMemoryPersistence';
 export { MessageTemplatesFilePersistence } from './MessageTemplatesFilePersistence';
-export { MessageTemplatesMongoDbSchema } from './MessageTemplatesMongoDbSchema';
+export { MessageTemplatesMongooseSchema } from './MessageTemplatesMongooseSchema';
 export { MessageTemplatesMongoDbPersistence } from './MessageTemplatesMongoDbPersistence';
