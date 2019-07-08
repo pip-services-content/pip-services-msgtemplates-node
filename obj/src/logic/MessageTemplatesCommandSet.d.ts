@@ -3,10 +3,10 @@ import { IMessageTemplatesController } from './IMessageTemplatesController';
 export declare class MessageTemplatesCommandSet extends CommandSet {
     private _logic;
     constructor(logic: IMessageTemplatesController);
-    private makeGetMessageTemplatesCommand;
-    private makeGetMessageTemplateByIdCommand;
-    private makeGetMessageTemplateByIdOrNameCommand;
-    private makeCreateMessageTemplateCommand;
-    private makeUpdateMessageTemplateCommand;
-    private makeDeleteMessageTemplateByIdCommand;
+    private makeGetMessageTemplatesCommand();
+    private makeGetMessageTemplateByIdCommand();
+    private makeGetMessageTemplateByIdOrNameCommand();
+    private makeCreateMessageTemplateCommand();
+    private makeUpdateMessageTemplateCommand();
+    private makeDeleteMessageTemplateByIdCommand();
 }
