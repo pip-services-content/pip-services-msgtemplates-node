@@ -6,7 +6,7 @@ exports.MessageTemplatesMongooseSchema = function (collection) {
     collection = collection || 'message_templates';
     let schema = new mongoose_1.Schema({
         /* Identification */
-        _id: { type: String, unique: true },
+        _id: { type: String },
         name: { type: String, required: true },
         /* Content */
         from: { type: String, required: false },

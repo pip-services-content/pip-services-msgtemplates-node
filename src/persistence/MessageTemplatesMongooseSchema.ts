@@ -7,7 +7,7 @@ export let MessageTemplatesMongooseSchema = function(collection?: string) {
     let schema = new Schema(
         {
             /* Identification */
-            _id: { type: String, unique: true },
+            _id: { type: String },
             name: { type: String, required: true },
             
             /* Content */
