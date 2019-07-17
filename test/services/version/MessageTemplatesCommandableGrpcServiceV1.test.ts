@@ -1,20 +1,23 @@
-let _ = require('lodash');
-let async = require('async');
-let restify = require('restify');
 let assert = require('chai').assert;
+let grpc = require('grpc');
+var protoLoader = require('@grpc/proto-loader');
+let async = require('async');
 
+let services = require('../../../../src/protos/msgtemplates_v1_grpc_pb');
+let messages = require('../../../../src/protos/msgtemplates_v1_pb');
+
+import { Descriptor } from 'pip-services3-commons-node';
 import { ConfigParams } from 'pip-services3-commons-node';
 import { MultiString } from 'pip-services3-commons-node';
-import { Descriptor } from 'pip-services3-commons-node';
 import { References } from 'pip-services3-commons-node';
 
 import { MessageTemplateV1 } from '../../../src/data/version1/MessageTemplateV1';
 import { MessageTemplateStatusV1 } from '../../../src/data/version1/MessageTemplateStatusV1';
 import { MessageTemplatesMemoryPersistence } from '../../../src/persistence/MessageTemplatesMemoryPersistence';
 import { MessageTemplatesController } from '../../../src/logic/MessageTemplatesController';
-import { MessageTemplatesHttpServiceV1 } from '../../../src/services/version1/MessageTemplatesHttpServiceV1';
+import { MessageTemplatesCommandableGrpcServiceV1 } from '../../../src/services/version1/MessageTemplatesCommandableGrpcServiceV1';
 
-let httpConfig = ConfigParams.fromTuples(
+var grpcConfig = ConfigParams.fromTuples(
     "connection.protocol", "http",
     "connection.host", "localhost",
     "connection.port", 3000
@@ -39,21 +42,22 @@ let TEMPLATE2: MessageTemplateV1 = {
     status: MessageTemplateStatusV1.Completed
 };
 
-suite('MessageTemplatesHttpServiceV1', ()=> {    
-    let service: MessageTemplatesHttpServiceV1;
-    let rest: any;
+suite('MessageTemplatesCommandableGrpcServiceV1', ()=> {
+    let service: MessageTemplatesCommandableGrpcServiceV1;
+
+    let client: any;
 
     suiteSetup((done) => {
         let persistence = new MessageTemplatesMemoryPersistence();
         let controller = new MessageTemplatesController();
 
-        service = new MessageTemplatesHttpServiceV1();
-        service.configure(httpConfig);
+        service = new MessageTemplatesCommandableGrpcServiceV1();
+        service.configure(grpcConfig);
 
         let references: References = References.fromTuples(
             new Descriptor('pip-services-msgtemplates', 'persistence', 'memory', 'default', '1.0'), persistence,
             new Descriptor('pip-services-msgtemplates', 'controller', 'default', 'default', '1.0'), controller,
-            new Descriptor('pip-services-msgtemplates', 'service', 'http', 'default', '1.0'), service
+            new Descriptor('pip-services-msgtemplates', 'service', 'grpc', 'default', '1.0'), service
         );
         controller.setReferences(references);
         service.setReferences(references);
@@ -66,23 +70,41 @@ suite('MessageTemplatesHttpServiceV1', ()=> {
     });
 
     setup(() => {
-        let url = 'http://localhost:3000';
-        rest = restify.createJsonClient({ url: url, version: '*' });
+        let packageDefinition = protoLoader.loadSync(
+            __dirname + "../../../../../node_modules/pip-services3-grpc-node/src/protos/commandable.proto",
+            {
+                keepCase: true,
+                longs: Number,
+                enums: Number,
+                defaults: true,
+                oneofs: true
+            }
+        );
+        let clientProto = grpc.loadPackageDefinition(packageDefinition).commandable.Commandable;
+
+        client = new clientProto('localhost:3000', grpc.credentials.createInsecure());
     });
-    
-    
+
     test('CRUD Operations', (done) => {
         let template1, template2;
 
         async.series([
         // Create one template
             (callback) => {
-                rest.post('/v1/message_templates/create_template',
+                client.invoke(
                     {
-                        template: TEMPLATE1
+                        method: 'v1/message_templates.create_template',
+                        args_empty: false,
+                        args_json: JSON.stringify({ 
+                            template: TEMPLATE1
+                        })
                     },
-                    (err, req, res, template) => {
+                    (err, response) => {
                         assert.isNull(err);
+
+                        assert.isFalse(response.result_empty);
+                        assert.isString(response.result_json);
+                        let template = JSON.parse(response.result_json);
 
                         assert.isObject(template);
                         assert.equal(template.name, TEMPLATE1.name);
@@ -96,12 +118,20 @@ suite('MessageTemplatesHttpServiceV1', ()=> {
             },
         // Create another template
             (callback) => {
-                rest.post('/v1/message_templates/create_template', 
+                client.invoke(
                     {
-                        template: TEMPLATE2
+                        method: 'v1/message_templates.create_template',
+                        args_empty: false,
+                        args_json: JSON.stringify({ 
+                            template: TEMPLATE2
+                        })
                     },
-                    (err, req, res, template) => {
+                    (err, response) => {
                         assert.isNull(err);
+
+                        assert.isFalse(response.result_empty);
+                        assert.isString(response.result_json);
+                        let template = JSON.parse(response.result_json);
 
                         assert.isObject(template);
                         assert.equal(template.name, TEMPLATE2.name);
@@ -115,10 +145,18 @@ suite('MessageTemplatesHttpServiceV1', ()=> {
             },
         // Get all templates
             (callback) => {
-                rest.post('/v1/message_templates/get_templates',
-                    {},
-                    (err, req, res, page) => {
+                client.invoke(
+                    {
+                        method: 'v1/message_templates.get_templates',
+                        args_empty: false,
+                        args_json: JSON.stringify({ })
+                    },
+                    (err, response) => {
                         assert.isNull(err);
+
+                        assert.isFalse(response.result_empty);
+                        assert.isString(response.result_json);
+                        let page = JSON.parse(response.result_json);
 
                         assert.isObject(page);
                         assert.lengthOf(page.data, 2);
@@ -131,12 +169,20 @@ suite('MessageTemplatesHttpServiceV1', ()=> {
             (callback) => {
                 template1.text = { en: 'Updated Content 1' };
 
-                rest.post('/v1/message_templates/update_template',
-                    { 
-                        template: template1
+                client.invoke(
+                    {
+                        method: 'v1/message_templates.update_template',
+                        args_empty: false,
+                        args_json: JSON.stringify({ 
+                            template: template1
+                        })
                     },
-                    (err, req, res, template) => {
+                    (err, response) => {
                         assert.isNull(err);
+
+                        assert.isFalse(response.result_empty);
+                        assert.isString(response.result_json);
+                        let template = JSON.parse(response.result_json);
 
                         assert.isObject(template);
                         assert.equal(template.text.en, 'Updated Content 1');
@@ -150,12 +196,20 @@ suite('MessageTemplatesHttpServiceV1', ()=> {
             },
         // Delete template
             (callback) => {
-                rest.post('/v1/message_templates/delete_template_by_id',
+                client.invoke(
                     {
-                        template_id: template1.id
+                        method: 'v1/message_templates.delete_template_by_id',
+                        args_empty: false,
+                        args_json: JSON.stringify({ 
+                            template_id: template1.id
+                        })
                     },
-                    (err, req, res, result) => {
+                    (err, response) => {
                         assert.isNull(err);
+
+                        assert.isFalse(response.result_empty);
+                        assert.isString(response.result_json);
+                        let template = JSON.parse(response.result_json);
 
                         //assert.isNull(result);
 
@@ -165,12 +219,18 @@ suite('MessageTemplatesHttpServiceV1', ()=> {
             },
         // Try to get delete template
             (callback) => {
-                rest.post('/v1/message_templates/get_template_by_id',
+                client.invoke(
                     {
-                        template_id: template1.id
+                        method: 'v1/message_templates.get_template_by_id',
+                        args_empty: false,
+                        args_json: JSON.stringify({ 
+                            template_id: template1.id
+                        })
                     },
-                    (err, req, res, result) => {
+                    (err, response) => {
                         assert.isNull(err);
+
+                        assert.isTrue(response.result_empty);
 
                         //assert.isNull(result);
 
@@ -180,4 +240,5 @@ suite('MessageTemplatesHttpServiceV1', ()=> {
             }
         ], done);
     });
+
 });

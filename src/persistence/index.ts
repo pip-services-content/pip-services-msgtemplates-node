@@ -3,3 +3,4 @@ export { MessageTemplatesMemoryPersistence } from './MessageTemplatesMemoryPersi
 export { MessageTemplatesFilePersistence } from './MessageTemplatesFilePersistence';
 export { MessageTemplatesMongooseSchema } from './MessageTemplatesMongooseSchema';
 export { MessageTemplatesMongoDbPersistence } from './MessageTemplatesMongoDbPersistence';
+export { MessageTemplatesCouchbasePersistence } from './MessageTemplatesCouchbasePersistence';
