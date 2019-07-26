@@ -4,11 +4,11 @@ export declare class MessageTemplatesGrpcServiceV1 extends GrpcService {
     private _controller;
     constructor();
     setReferences(references: IReferences): void;
-    private getTemplates(call, callback);
-    private getTemplateById(call, callback);
-    private getTemplateByIdOrName(call, callback);
-    private createTemplate(call, callback);
-    private updateTemplate(call, callback);
-    private deleteTemplateById(call, callback);
+    private getTemplates;
+    private getTemplateById;
+    private getTemplateByIdOrName;
+    private createTemplate;
+    private updateTemplate;
+    private deleteTemplateById;
     register(): void;
 }

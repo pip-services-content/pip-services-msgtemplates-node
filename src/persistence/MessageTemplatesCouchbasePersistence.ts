@@ -15,7 +15,7 @@ export class MessageTemplatesCouchbasePersistence
     implements IMessageTemplatesPersistence {
 
     constructor() {
-        super('msgtemplates');
+        super('users', 'msgtemplates');
     }
 
     private composeFilter(filter: any) {
