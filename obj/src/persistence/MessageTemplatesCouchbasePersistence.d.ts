@@ -6,7 +6,7 @@ import { MessageTemplateV1 } from '../data/version1/MessageTemplateV1';
 import { IMessageTemplatesPersistence } from './IMessageTemplatesPersistence';
 export declare class MessageTemplatesCouchbasePersistence extends IdentifiableCouchbasePersistence<MessageTemplateV1, string> implements IMessageTemplatesPersistence {
     constructor();
-    private composeFilter;
+    private composeFilter(filter);
     getPageByFilter(correlationId: string, filter: FilterParams, paging: PagingParams, callback: (err: any, page: DataPage<MessageTemplateV1>) => void): void;
     getOneByIdOrName(correlationId: string, idOrName: string, callback: (err: any, item: MessageTemplateV1) => void): void;
 }
