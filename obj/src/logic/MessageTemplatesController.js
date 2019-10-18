@@ -43,6 +43,6 @@ class MessageTemplatesController {
         this._persistence.deleteById(correlationId, id, callback);
     }
 }
-MessageTemplatesController._defaultConfig = pip_services3_commons_node_1.ConfigParams.fromTuples('dependencies.persistence', 'pip-services-msgtemplates:persistence:*:*:1.0');
 exports.MessageTemplatesController = MessageTemplatesController;
+MessageTemplatesController._defaultConfig = pip_services3_commons_node_1.ConfigParams.fromTuples('dependencies.persistence', 'pip-services-msgtemplates:persistence:*:*:1.0');
 //# sourceMappingURL=MessageTemplatesController.js.map

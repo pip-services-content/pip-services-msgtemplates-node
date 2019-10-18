@@ -23,6 +23,7 @@ class MessageTemplatesServiceFactory extends pip_services3_components_node_1.Fac
         this.registerAsType(MessageTemplatesServiceFactory.GrpcServiceDescriptor, MessageTemplatesGrpcServiceV1_1.MessageTemplatesGrpcServiceV1);
     }
 }
+exports.MessageTemplatesServiceFactory = MessageTemplatesServiceFactory;
 MessageTemplatesServiceFactory.Descriptor = new pip_services3_commons_node_1.Descriptor("pip-services-msgtemplates", "factory", "default", "default", "1.0");
 MessageTemplatesServiceFactory.MemoryPersistenceDescriptor = new pip_services3_commons_node_1.Descriptor("pip-services-msgtemplates", "persistence", "memory", "*", "1.0");
 MessageTemplatesServiceFactory.FilePersistenceDescriptor = new pip_services3_commons_node_1.Descriptor("pip-services-msgtemplates", "persistence", "file", "*", "1.0");
@@ -32,5 +33,4 @@ MessageTemplatesServiceFactory.ControllerDescriptor = new pip_services3_commons_
 MessageTemplatesServiceFactory.HttpServiceDescriptor = new pip_services3_commons_node_1.Descriptor("pip-services-msgtemplates", "service", "http", "*", "1.0");
 MessageTemplatesServiceFactory.CommandableGrpcServiceDescriptor = new pip_services3_commons_node_1.Descriptor("pip-services-msgtemplates", "service", "commandable-grpc", "*", "1.0");
 MessageTemplatesServiceFactory.GrpcServiceDescriptor = new pip_services3_commons_node_1.Descriptor("pip-services-msgtemplates", "service", "grpc", "*", "1.0");
-exports.MessageTemplatesServiceFactory = MessageTemplatesServiceFactory;
 //# sourceMappingURL=MessageTemplatesServiceFactory.js.map
