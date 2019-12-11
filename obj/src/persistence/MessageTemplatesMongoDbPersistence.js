@@ -3,11 +3,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 let _ = require('lodash');
 const pip_services3_commons_node_1 = require("pip-services3-commons-node");
 const pip_services3_commons_node_2 = require("pip-services3-commons-node");
-const pip_services3_mongoose_node_1 = require("pip-services3-mongoose-node");
-const MessageTemplatesMongooseSchema_1 = require("./MessageTemplatesMongooseSchema");
-class MessageTemplatesMongoDbPersistence extends pip_services3_mongoose_node_1.IdentifiableMongoosePersistence {
+const pip_services3_mongodb_node_1 = require("pip-services3-mongodb-node");
+class MessageTemplatesMongoDbPersistence extends pip_services3_mongodb_node_1.IdentifiableMongoDbPersistence {
     constructor() {
-        super('msgtemplates', MessageTemplatesMongooseSchema_1.MessageTemplatesMongooseSchema());
+        super('msgtemplates');
     }
     composeFilter(filter) {
         filter = filter || new pip_services3_commons_node_1.FilterParams();
@@ -56,7 +55,7 @@ class MessageTemplatesMongoDbPersistence extends pip_services3_mongoose_node_1.I
                 { name: idOrName }
             ]
         };
-        this._model.findOne(filter, (err, item) => {
+        this._collection.findOne(filter, (err, item) => {
             if (!err)
                 this._logger.trace(correlationId, "Retrieved from %s by %s", this._collection, idOrName);
             if (item == null) {

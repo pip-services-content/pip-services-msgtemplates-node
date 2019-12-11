@@ -4,18 +4,17 @@ import { FilterParams } from 'pip-services3-commons-node';
 import { PagingParams } from 'pip-services3-commons-node';
 import { DataPage } from 'pip-services3-commons-node';
 import { NotFoundException } from 'pip-services3-commons-node';
-import { IdentifiableMongoosePersistence } from 'pip-services3-mongoose-node';
+import { IdentifiableMongoDbPersistence } from 'pip-services3-mongodb-node';
 
 import { MessageTemplateV1 } from '../data/version1/MessageTemplateV1';
 import { IMessageTemplatesPersistence } from './IMessageTemplatesPersistence';
-import { MessageTemplatesMongooseSchema } from './MessageTemplatesMongooseSchema';
 
 export class MessageTemplatesMongoDbPersistence 
-    extends IdentifiableMongoosePersistence<MessageTemplateV1, string> 
+    extends IdentifiableMongoDbPersistence<MessageTemplateV1, string> 
     implements IMessageTemplatesPersistence {
 
     constructor() {
-        super('msgtemplates', MessageTemplatesMongooseSchema());
+        super('msgtemplates');
     }
     
     private composeFilter(filter: any) {
@@ -76,7 +75,7 @@ export class MessageTemplatesMongoDbPersistence
             ]
         };
         
-        this._model.findOne(filter, (err, item) => {
+        this._collection.findOne(filter, (err, item) => {
             if (!err)
                 this._logger.trace(correlationId, "Retrieved from %s by %s", this._collection, idOrName);
 
